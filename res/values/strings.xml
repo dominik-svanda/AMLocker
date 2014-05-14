@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AMLocker</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_section1">Trénovanie</string>
+    <string name="title_section2">Aplikácie</string>
+    <string name="title_section3">Heslo</string>
+    
+    <string name="gesture_delete">Vymaž gesto</string>
+    <string name="gesture_train">Trenuj gesto</string>
+    <string name="gesture_treshold">Tolerancia</string>
+    
+    <string name="shortcut1">Launcher</string>
+    <string name="shortcut2">Shortcut App1</string>
+    <string name="shortcut3">Shortcut App2</string>
+    <string name="shortcut4">Shortcut App3</string>
+    
+    <string name="oldpass">Staré heslo</string>
+    <string name="newpass">Nové heslo</string>
+    <string name="newpassagain">Opakuj nové heslo</string>
+    <string name="pass_change">Ulož heslo</string>
+
+    <string-array name="tab_names">
+        <item>Trénovanie</item>
+        <item>Aplikácie</item>
+        <item>Heslo</item>
+    </string-array>
+    
+    <string name="gestures_prompt">Choose a country</string>
+ 
+    <string-array name="gestures_arrays">
+        <item>@string/shortcut1</item>
+        <item>@string/shortcut2</item>
+        <item>@string/shortcut3</item>
+        <item>@string/shortcut4</item>
+    </string-array>
+    
+</resources>
