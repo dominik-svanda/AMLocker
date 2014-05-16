@@ -18,7 +18,7 @@
         	android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/gesture_delete"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/shortcut1" />
@@ -28,7 +28,7 @@
         	android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/gesture_train"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/shortcut2" />
@@ -38,7 +38,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/gesture_start_stop"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="@string/shortcut3" />

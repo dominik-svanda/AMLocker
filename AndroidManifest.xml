@@ -18,10 +18,16 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.dfki.GestureFramework.GestureRecognitionService"
+			android:enabled="true" android:label="GestureRecognitionService"
+			>
+			<intent-filter>
+				<action android:name="com.dfki.GestureFramework.GESTURE_RECOGNIZER" />
+			</intent-filter>
+		</service>
     </application>
     	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>

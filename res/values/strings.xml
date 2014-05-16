@@ -10,6 +10,9 @@
     <string name="gesture_delete">Vymaž gesto</string>
     <string name="gesture_train">Trenuj gesto</string>
     <string name="gesture_treshold">Tolerancia</string>
+    <string name="gesture_train_stop">Ukončiť trénovanie</string>
+    <string name="gesture_train_set">Default</string>
+    <string name="msg_delete_gesture">Naozaj chcete vymazať gesto</string>
     
     <string name="shortcut1">Launcher</string>
     <string name="shortcut2">Shortcut App1</string>

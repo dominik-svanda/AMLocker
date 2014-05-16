@@ -32,9 +32,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.dfki.GestureFramework.Gesture;
-
 import android.content.Context;
+
+import com.dfki.GestureFramework.Gesture;
 import com.dfki.GestureFramework.classifier.featureExtraction.IFeatureExtractor;
 
 public class GestureClassifier {

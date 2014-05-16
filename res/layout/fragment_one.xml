@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/gesture_screen"
     android:orientation="vertical" >
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/gesture_dropdown"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:entries="@array/gestures_arrays"
@@ -17,13 +18,13 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/gesture_delete"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:text="@string/gesture_delete" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/gesture_train"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:text="@string/gesture_train" />
@@ -44,8 +45,8 @@
             android:layout_height="wrap_content" >
 
             <SeekBar
-                android:id="@+id/seekBar1"
-                android:layout_width="246dp"
+                android:id="@+id/gesture_tolerance"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.70"
                 android:max="10"
@@ -56,21 +57,22 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/gesture_around_start"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/gesture_start_stop"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
 
         <ProgressBar
-            android:id="@+id/progressBar1"
+            android:id="@+id/gesture_train_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
