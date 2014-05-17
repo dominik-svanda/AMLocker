@@ -56,5 +56,10 @@
             android:layout_height="wrap_content"
             android:prompt="@string/shortcut4" />
 
+        <Button
+            android:id="@+id/apps_save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save" />
 
 </LinearLayout>

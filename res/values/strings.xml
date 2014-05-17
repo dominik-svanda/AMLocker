@@ -18,6 +18,8 @@
     <string name="shortcut2">Shortcut App1</string>
     <string name="shortcut3">Shortcut App2</string>
     <string name="shortcut4">Shortcut App3</string>
+    <string name="save">Uložiť</string>
+    <string name="save_settings_prompt">Nastavenia uložené</string>
     
     <string name="oldpass">Staré heslo</string>
     <string name="newpass">Nové heslo</string>

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
@@ -29,6 +31,8 @@ public class FragmentTwo extends Fragment {
 	Spinner spinner_shortcut2;
 	@InjectView(R.id.apps_shortcut3)
 	Spinner spinner_shortcut3;
+	@InjectView(R.id.apps_save_button)
+	Button apps_save;
 	
 	@InjectView(R.id.apps_text_launcher)
 	TextView text_launcher;
@@ -70,8 +74,25 @@ public class FragmentTwo extends Fragment {
 	@OnClick(R.id.apps_text_launcher)
 	void spinner1Clicked(View v){
 		ResolveInfo entry = (ResolveInfo)spinner_launcher.getSelectedItem();
-		Toast.makeText(getActivity(), String.format(entry.activityInfo.packageName), Toast.LENGTH_LONG).show();
+		SharedPreferences settings = getActivity().getSharedPreferences("AppShortcuts", 0);
+		Toast.makeText(getActivity(), String.format(settings.getString("Launcher", "").toString()), Toast.LENGTH_LONG).show();
 		
 	}
-	
+	@OnClick(R.id.apps_save_button)
+	void saveClicked(View v){
+		ResolveInfo entry1 = (ResolveInfo)spinner_launcher.getSelectedItem();
+		ResolveInfo entry2 = (ResolveInfo)spinner_shortcut1.getSelectedItem();
+		ResolveInfo entry3 = (ResolveInfo)spinner_shortcut2.getSelectedItem();
+		ResolveInfo entry4 = (ResolveInfo)spinner_shortcut3.getSelectedItem();
+		
+		SharedPreferences settings = getActivity().getSharedPreferences("AppShortcuts", 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("Launcher",entry1.activityInfo.packageName);
+		editor.putString("Shortcut1",entry2.activityInfo.packageName);
+		editor.putString("Shortcut2",entry3.activityInfo.packageName);
+		editor.putString("Shortcut3",entry4.activityInfo.packageName);
+		editor.commit();
+		
+		Toast.makeText(getActivity(), String.format(getString(R.string.save_settings_prompt)), Toast.LENGTH_LONG).show();
+	}
 }

@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.os.Bundle;
@@ -135,6 +136,7 @@ public class FragmentOne extends Fragment {
 		gestureStartStop = (Button)view.findViewById(R.id.gesture_start_stop);
 		ButterKnife.inject(this, view);
 		//ButterKnife.findById(this, id)
+
 		return view;
 	}
 	
