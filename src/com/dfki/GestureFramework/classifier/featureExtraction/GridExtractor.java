@@ -24,7 +24,7 @@ package com.dfki.GestureFramework.classifier.featureExtraction;
 import java.util.ArrayList;
 
 import com.dfki.GestureFramework.Gesture;
-
+import com.dfki.GestureFramework.classifier.featureExtraction.IFeatureExtractorConstCount;
 
 public class GridExtractor implements IFeatureExtractorConstCount {
 	final static int SAMPLE_STEPS = 32;

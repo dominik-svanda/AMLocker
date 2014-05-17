@@ -34,7 +34,7 @@
             android:layout_height="5dp" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/apps_text_launcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gesture_treshold"

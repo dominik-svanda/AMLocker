@@ -1,58 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:showDividers="middle" >
 
-    
-
-    		<LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/apps_text_launcher"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:showDividers="middle" >
-        
-       	<Space
-        	android:layout_width="match_parent"
-        	android:layout_height="20dp" />
+        android:text="@string/shortcut1" 
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:id="@+id/gesture_delete"
+        <Spinner
+            android:id="@+id/apps_launcher"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/shortcut1" />
-        
-        <Space
-        	android:layout_width="match_parent"
-        	android:layout_height="20dp" />
+            android:layout_height="wrap_content"
+            android:prompt="@string/shortcut1" />
 
-        <Button
-            android:id="@+id/gesture_train"
+        <TextView
+            android:id="@+id/apps_text_shortcut1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:text="@string/shortcut2" 
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/apps_shortcut1"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/shortcut2" />
+            android:layout_height="wrap_content"
+            android:prompt="@string/shortcut2" />
 
-        <Space
+        <TextView
+            android:id="@+id/apps_text_shortcut2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:text="@string/shortcut3" 
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/apps_shortcut2"
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="wrap_content"
+            android:prompt="@string/shortcut3" />
 
-        <Button
-            android:id="@+id/gesture_start_stop"
+        <TextView
+            android:id="@+id/apps_text_shortcut3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:text="@string/shortcut4" 
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/apps_shortcut3"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/shortcut3" />
+            android:layout_height="wrap_content"
+            android:prompt="@string/shortcut4" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="@string/shortcut4" />
-
-</LinearLayout>
 
 </LinearLayout>
