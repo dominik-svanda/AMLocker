@@ -1,25 +1,23 @@
 package com.svanda.amlocker.fragments;
 
+import android.content.SharedPreferences;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 
-import com.svanda.amlocker.adapters.AppInfoApadpter;
-import com.svanda.amlocker.activities.Utilities;
 import com.svanda.amlocker.R;
+import com.svanda.amlocker.activities.Utilities;
+import com.svanda.amlocker.adapters.AppInfoApadpter;
 
 public class FragmentTwo extends Fragment {
 

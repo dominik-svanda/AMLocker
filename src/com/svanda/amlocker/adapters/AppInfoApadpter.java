@@ -2,21 +2,17 @@ package com.svanda.amlocker.adapters;
 
 import java.util.List;
 
-import com.svanda.amlocker.R;
-
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.svanda.amlocker.R;
 
 public class AppInfoApadpter extends BaseAdapter {
 	private Context mContext;

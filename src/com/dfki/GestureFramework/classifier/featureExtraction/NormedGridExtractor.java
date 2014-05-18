@@ -22,7 +22,6 @@
 package com.dfki.GestureFramework.classifier.featureExtraction;
 
 import com.dfki.GestureFramework.Gesture;
-import com.dfki.GestureFramework.classifier.featureExtraction.NormExtractor;
 
 public class NormedGridExtractor implements IFeatureExtractorConstCount {
 

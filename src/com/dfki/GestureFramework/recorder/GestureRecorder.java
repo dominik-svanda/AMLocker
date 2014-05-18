@@ -30,6 +30,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import com.svanda.amlocker.fragments.FragmentOne;
+import com.svanda.amlocker.lockscreen.LockScreenAppActivity;
 
 
 public class GestureRecorder implements SensorEventListener {
@@ -110,7 +111,7 @@ public class GestureRecorder implements SensorEventListener {
 		}*/
 		switch (recordMode) {
 		case MOTION_DETECTION:
-			if (isRecording && FragmentOne.gestureStartStop.isPressed()) {
+			if (isRecording && (/*FragmentOne.gestureStartStop.isPressed() ||*/ LockScreenAppActivity.UnlockGestureButton.isPressed())) {
 				gestureValues.add(value);
 				if (calcVectorNorm(value) < THRESHOLD) {
 					stepsSinceNoMovement++;
@@ -123,7 +124,7 @@ public class GestureRecorder implements SensorEventListener {
 				gestureValues = new ArrayList<float[]>();
 				gestureValues.add(value);
 			}
-			if (!FragmentOne.gestureStartStop.isPressed() && (stepsSinceNoMovement != 0)) {
+			if (!(/*FragmentOne.gestureStartStop.isPressed() ||*/ LockScreenAppActivity.UnlockGestureButton.isPressed()) && (stepsSinceNoMovement != 0)) {
 
 				System.out.println("Length is: " + String.valueOf(gestureValues.size() - 10));
 				if (gestureValues.size() - 10 > MIN_GESTURE_SIZE) {
@@ -135,7 +136,7 @@ public class GestureRecorder implements SensorEventListener {
 			}
 			break;
 		case PUSH_TO_GESTURE:
-			if(FragmentOne.gestureStartStop.isPressed()){
+			if(/*FragmentOne.gestureStartStop.isPressed()||*/ LockScreenAppActivity.UnlockGestureButton.isPressed()){
 				if (isRecording) {
 					gestureValues.add(value);
 				}

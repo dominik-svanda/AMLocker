@@ -2,14 +2,10 @@ package com.svanda.amlocker.activities;
 
 import java.util.List;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.sax.StartElementListener;
-import android.widget.Toast;
 
 public class Utilities {
 	
