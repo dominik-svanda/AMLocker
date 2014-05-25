@@ -172,57 +172,57 @@ public class FragmentOne extends Fragment {
 	}
 
 	
-//	@OnClick(R.id.gesture_train)
-//	void gestureTrainClicked(View v){
-//		activeTrainingSet = getActivity().getResources().getString(R.string.gesture_train_set);
-//		if (recognitionService == null)
-//			Toast.makeText(getActivity(), String.format("recognitionService je NULL"), Toast.LENGTH_LONG).show();
-//		if (recognitionService != null) {
-//			
-//			try {
-//				if (!recognitionService.isLearning()) {
-//					gestureTrain.setText(getActivity().getResources().getString(R.string.gesture_train_stop));
-//					gestureDelete.setEnabled(false);
-//					gestureDropdown.setEnabled(false);
-//					//Zaciatok trenovania
-//					recognitionService.startLearnMode(activeTrainingSet, gestureDropdown.getSelectedItem().toString());
-//				} else {
-//					gestureTrain.setText(getActivity().getResources().getString(R.string.gesture_train));
-//					gestureDropdown.setEnabled(true);
-//					gestureDelete.setEnabled(true);
-//					recognitionService.stopLearnMode();
-//				}
-//			} catch (RemoteException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-//	@OnClick(R.id.gesture_delete)
-//	void gestureDeleteClicked(View v){
-//		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//		builder.setMessage(getActivity().getResources().getString(R.string.msg_delete_gesture)+" "+gestureDropdown.getSelectedItem().toString()+"?").setCancelable(true).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int id) {
-//				if (recognitionService != null) {
-//					try {
-//						recognitionService.deleteGesture(activeTrainingSet, gestureDropdown.getSelectedItem().toString());
-//						trainProgress = 0;
-//						gestureTrainProgress.getProgressDrawable().clearColorFilter();
-//						gestureTrainProgress.setProgress(trainProgress);
-//						//recognitionService.deleteTrainingSet(activeTrainingSet);
-//					} catch (RemoteException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-//			public void onClick(DialogInterface dialog, int id) {
-//				dialog.cancel();
-//			}
-//		});
-//		builder.create().show();
-//	}
+	@OnClick(R.id.gesture_train)
+	void gestureTrainClicked(View v){
+		activeTrainingSet = getActivity().getResources().getString(R.string.gesture_train_set);
+		if (recognitionService == null)
+			Toast.makeText(getActivity(), String.format("recognitionService je NULL"), Toast.LENGTH_LONG).show();
+		if (recognitionService != null) {
+			
+			try {
+				if (!recognitionService.isLearning()) {
+					gestureTrain.setText(getActivity().getResources().getString(R.string.gesture_train_stop));
+					gestureDelete.setEnabled(false);
+					gestureDropdown.setEnabled(false);
+					//Zaciatok trenovania
+					recognitionService.startLearnMode(activeTrainingSet, gestureDropdown.getSelectedItem().toString());
+				} else {
+					gestureTrain.setText(getActivity().getResources().getString(R.string.gesture_train));
+					gestureDropdown.setEnabled(true);
+					gestureDelete.setEnabled(true);
+					recognitionService.stopLearnMode();
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	@OnClick(R.id.gesture_delete)
+	void gestureDeleteClicked(View v){
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setMessage(getActivity().getResources().getString(R.string.msg_delete_gesture)+" "+gestureDropdown.getSelectedItem().toString()+"?").setCancelable(true).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				if (recognitionService != null) {
+					try {
+						recognitionService.deleteGesture(activeTrainingSet, gestureDropdown.getSelectedItem().toString());
+						trainProgress = 0;
+						gestureTrainProgress.getProgressDrawable().clearColorFilter();
+						gestureTrainProgress.setProgress(trainProgress);
+						//recognitionService.deleteTrainingSet(activeTrainingSet);
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		builder.create().show();
+	}
 
 	@Override
 	public void onResume() {

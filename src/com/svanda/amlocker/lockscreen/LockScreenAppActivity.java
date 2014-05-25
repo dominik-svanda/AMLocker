@@ -2,7 +2,10 @@ package com.svanda.amlocker.lockscreen;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import android.content.Context;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.ComponentName;
@@ -24,6 +27,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.InjectView;
 
@@ -46,6 +50,7 @@ public class LockScreenAppActivity extends Activity {
 	IGestureRecognitionService recognitionService;
 	String activeTrainingSet;
 	public static Button UnlockGestureButton;
+	public TextView LockTime;
 	
 	//PasswordFiled element
 	EditText password_field;
@@ -79,7 +84,8 @@ public class LockScreenAppActivity extends Activity {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					if (distribution.getBestDistance() <  5  ){	
+					if (distribution.getBestDistance() <  tolerance  ){
+				    	start_shortcut(distribution.getBestMatch());
 						//gestureAroundStart.setBackgroundColor(0xFF00FF00);
 						Toast.makeText(LockScreenAppActivity.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
 					}else{
@@ -103,10 +109,31 @@ public class LockScreenAppActivity extends Activity {
 			
 		}
 	};
-
+	public void start_shortcut(String bestMatch){
+		SharedPreferences settings = getSharedPreferences("AppShortcuts", 0);
+		if ("Launcher".equals(bestMatch )) {
+			Locked = false;
+			Intent intent  = new Intent().addCategory(Intent.CATEGORY_HOME).setAction(Intent.ACTION_MAIN).setPackage(settings.getString("Launcher", "").toString());
+	 		intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+	 		startActivity(intent);
+		}
+		else if ("Shortcut App1".equals(bestMatch )) {
+			Intent intent  = new Intent().setAction(Intent.ACTION_MAIN).setPackage(settings.getString("Shortcut1", "").toString());;
+	 		startActivity(intent);
+		}
+		else if ("Shortcut App2".equals(bestMatch )) {
+			Intent intent  = new Intent().setAction(Intent.ACTION_MAIN).setPackage(settings.getString("Shortcut2", "").toString());
+	 		startActivity(intent);
+		}
+		else if ("Shortcut App3".equals(bestMatch )) {
+			Intent intent  = new Intent().setAction(Intent.ACTION_MAIN).setPackage(settings.getString("Shortcut3", "").toString());
+	 		startActivity(intent);
+		}
+	}
 	@Override
 	  public void onCreate(Bundle savedInstanceState) {
-
+		super.onCreate(savedInstanceState);
+		activeTrainingSet = getResources().getString(R.string.gesture_train_set);
 		  requestWindowFeature(Window.FEATURE_NO_TITLE);
 		  getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 	      getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_FULLSCREEN/
@@ -114,8 +141,13 @@ public class LockScreenAppActivity extends Activity {
 	        setContentView(R.layout.lockscreen);
 	        password_field = (EditText) findViewById(R.id.PasswordField);
 	        UnlockGestureButton = (Button)findViewById(R.id.unlock);
+	        LockTime = (TextView) findViewById(R.id.lock_time);
 	        
-		      super.onCreate(savedInstanceState);
+	        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	        String currentDateandTime = sdf.format(new Date());
+	        LockTime.setText(currentDateandTime);
+	        
+		      
 		      startService(new Intent(this,MyService.class).setAction(Intent.ACTION_SCREEN_OFF));
 	        
 	        
@@ -252,32 +284,32 @@ public class LockScreenAppActivity extends Activity {
     	}else{
     		password_field.setVisibility(View.GONE);
     	}
-    	
-    	//Toast.makeText(this, "Huraaa", Toast.LENGTH_SHORT).show();
+    	if (recognitionService != null){
+    			Toast.makeText(this, "Huraaa", Toast.LENGTH_SHORT).show();
+    	}
     	return;
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         isPaused = true;
     	Vibrator v = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-    	v.vibrate(100);
+    	//v.vibrate(100);
+    	//TODO Problem s pause ked sa snazim vypnut servis
 //		try {
 //			recognitionService.unregisterListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
 //		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			//e.printStackTrace();
+//			e.printStackTrace();
 //		}
 //		recognitionService = null;
-//		this.unbindService(serviceConnection);
-
+//		unbindService(serviceConnection);
+        super.onPause();
 
     }
     @Override
     protected void onResume(){
     	Vibrator v = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
-    	v.vibrate(500);
+    	//v.vibrate(500);
 	    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
     	isPaused = false;
     	if(Locked == false){
@@ -286,10 +318,13 @@ public class LockScreenAppActivity extends Activity {
      		intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
      		startActivity(intent);
     	}
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String currentDateandTime = sdf.format(new Date());
+        LockTime.setText(currentDateandTime);
     	super.onResume();
-//		activeTrainingSet = getResources().getString(R.string.gesture_train_set);
-//		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
-//		this.bindService(bindIntent, serviceConnection, LockScreenAppActivity.BIND_AUTO_CREATE);
+		activeTrainingSet = getResources().getString(R.string.gesture_train_set);
+		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
+		bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
     @Override
     protected void onStop() {
@@ -309,14 +344,6 @@ public class LockScreenAppActivity extends Activity {
     @Override
     public boolean onKeyLongPress( int keyCode, KeyEvent event ) {
       if( keyCode == KeyEvent.KEYCODE_BACK ) {
-    	  /*Intent i = getIntent();
-    	  i.setAction(Intent.ACTION_MAIN);
-    	  i.addCategory(Intent.CATEGORY_LAUNCHER);
-    	  finish();
-    	  startActivity(i);*/
-    	  /*Intent intent = getIntent();
-    	  finish();
-    	  startActivity(intent);*/
     	    Intent intent = getIntent();
     	    overridePendingTransition(0, 0);
     	    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

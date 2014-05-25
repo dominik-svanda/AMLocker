@@ -124,7 +124,7 @@ public class GestureRecorder implements SensorEventListener {
 				gestureValues = new ArrayList<float[]>();
 				gestureValues.add(value);
 			}
-			if (!(/*FragmentOne.gestureStartStop.isPressed() ||*/ LockScreenAppActivity.UnlockGestureButton.isPressed()) && (stepsSinceNoMovement != 0)) {
+			if (!(/*FragmentOne.gestureStartStop.isPressed() || */LockScreenAppActivity.UnlockGestureButton.isPressed()) && (stepsSinceNoMovement != 0)) {
 
 				System.out.println("Length is: " + String.valueOf(gestureValues.size() - 10));
 				if (gestureValues.size() - 10 > MIN_GESTURE_SIZE) {
@@ -136,7 +136,7 @@ public class GestureRecorder implements SensorEventListener {
 			}
 			break;
 		case PUSH_TO_GESTURE:
-			if(/*FragmentOne.gestureStartStop.isPressed()||*/ LockScreenAppActivity.UnlockGestureButton.isPressed()){
+			if(/*FragmentOne.gestureStartStop.isPressed()|| */LockScreenAppActivity.UnlockGestureButton.isPressed()){
 				if (isRecording) {
 					gestureValues.add(value);
 				}
