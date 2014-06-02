@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.dfki.GestureFramework.IGestureRecognitionListener;
 import com.dfki.GestureFramework.IGestureRecognitionService;
 import com.dfki.GestureFramework.classifier.Distribution;
 import com.svanda.amlocker.R;
+import com.svanda.amlocker.activities.MainActivity;
 
 /**
  * Fragment for managing 3D gestures recorded from accelerometer
@@ -41,7 +43,7 @@ public class FragmentOne extends Fragment {
 
 	IGestureRecognitionService recognitionService;
 	String activeTrainingSet;
-	
+	public static boolean gesture_track = false; 
 //	@InjectView(R.id.gesture_start_stop)
 	public static Button gestureStartStop;
 	@InjectView(R.id.gesture_train)
@@ -58,6 +60,13 @@ public class FragmentOne extends Fragment {
 	SeekBar gestureTolerance;
 	
 	private int trainProgress = 0;
+	
+	public boolean getTrackMode(){
+		return gesture_track;
+	}
+	public void setTrackMode(boolean mode){
+		gesture_track = mode;
+	}
 	
 	/**
 	 * Service connection for Gesture Recognition Service
@@ -193,7 +202,20 @@ public class FragmentOne extends Fragment {
 				gestureStartStop.setText(String.valueOf(progress));
 				
 			}
-		});       
+		});
+	    gestureStartStop.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                	//Toast.makeText(getActivity(), String.format("Akcia DOLE"), Toast.LENGTH_SHORT).show();
+                	gesture_track = true;
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                	//Toast.makeText(getActivity(), String.format("Akcia HORE"), Toast.LENGTH_SHORT).show();
+                	gesture_track = false;
+                }
+                return true;
+            }
+    });
 		return view;
 	}
 	

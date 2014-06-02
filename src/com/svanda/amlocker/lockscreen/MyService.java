@@ -16,6 +16,7 @@ import com.svanda.amlocker.lockscreen.receiver.lockScreenReceiver;
  */
 public class MyService extends Service{
 	 BroadcastReceiver mReceiver;
+	 
 	// Intent myIntent;
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -42,9 +43,10 @@ public void onCreate() {
 
 
     super.onCreate();
+    
 
+	}
 
-}
 //@Override
 //public void onStart(Intent intent, int startId) {
 //	// TODO Auto-generated method stub
@@ -53,9 +55,9 @@ public void onCreate() {
 //}
 
 
-@Override
-public void onDestroy() {
+	@Override
+	public void onDestroy() {
 	unregisterReceiver(mReceiver);
 	super.onDestroy();
-}
+	}
 }

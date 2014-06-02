@@ -22,7 +22,9 @@ import android.os.Vibrator;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -35,6 +37,7 @@ import com.dfki.GestureFramework.IGestureRecognitionListener;
 import com.dfki.GestureFramework.IGestureRecognitionService;
 import com.dfki.GestureFramework.classifier.Distribution;
 import com.svanda.amlocker.R;
+import com.svanda.amlocker.fragments.FragmentOne;
 
 /**
  * Activity of lockscreen which provide access only for authorized users
@@ -59,61 +62,61 @@ public class LockScreenAppActivity extends Activity {
 	
 	//PasswordFiled element
 	EditText password_field;
-//	private final ServiceConnection serviceConnection = new ServiceConnection() {
-//
-//		@Override
-//		public void onServiceConnected(ComponentName className, IBinder service) {
-//			recognitionService = IGestureRecognitionService.Stub.asInterface(service);
-//			try {
-//				recognitionService.startClassificationMode(activeTrainingSet);
-//				recognitionService.registerListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
-//			} catch (RemoteException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//
-//		@Override
-//		public void onServiceDisconnected(ComponentName className) {
-//			recognitionService = null;
-//		}
-//	};
-//	
-//	IBinder gestureListenerStub = new IGestureRecognitionListener.Stub() {
-//
-//
-//		@Override
-//		public void onGestureRecognized(final Distribution distribution) throws RemoteException {
-//			SharedPreferences settings = getSharedPreferences("Gestures", 0);
-//			final int tolerance = settings.getInt("Tolerance", 0);
-//			runOnUiThread(new Runnable() {
-//				@Override
-//				public void run() {
-//					if (distribution.getBestDistance() <  tolerance  ){
-//				    	start_shortcut(distribution.getBestMatch());
-//						//gestureAroundStart.setBackgroundColor(0xFF00FF00);
-//						Toast.makeText(LockScreenAppActivity.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
-//					}else{
-//						//gestureAroundStart.setBackgroundColor(0xFFFF0000);
-//						Toast.makeText(LockScreenAppActivity.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
-//					}
-//				}
-//			});
-//		}
-//
-//		@Override
-//		public void onGestureLearned(String gestureName) throws RemoteException {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//
-//		@Override
-//		public void onTrainingSetDeleted(String trainingSet)
-//				throws RemoteException {
-//			// TODO Auto-generated method stub
-//			
-//		}
-//	};
+	private final ServiceConnection serviceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			recognitionService = IGestureRecognitionService.Stub.asInterface(service);
+			try {
+				recognitionService.startClassificationMode(activeTrainingSet);
+				recognitionService.registerListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName className) {
+			recognitionService = null;
+		}
+	};
+	
+	IBinder gestureListenerStub = new IGestureRecognitionListener.Stub() {
+
+
+		@Override
+		public void onGestureRecognized(final Distribution distribution) throws RemoteException {
+			SharedPreferences settings = getSharedPreferences("Gestures", 0);
+			final int tolerance = settings.getInt("Tolerance", 0);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (distribution.getBestDistance() <  tolerance  ){
+				    	start_shortcut(distribution.getBestMatch());
+						//gestureAroundStart.setBackgroundColor(0xFF00FF00);
+						Toast.makeText(LockScreenAppActivity.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
+					}else{
+						//gestureAroundStart.setBackgroundColor(0xFFFF0000);
+						Toast.makeText(LockScreenAppActivity.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
+					}
+				}
+			});
+		}
+
+		@Override
+		public void onGestureLearned(String gestureName) throws RemoteException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onTrainingSetDeleted(String trainingSet)
+				throws RemoteException {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 	/**
 	 * Start applications which are bind to gesture 
 	 * @param bestMatch Name of trained gesture which has best match to current created gesture
@@ -150,6 +153,21 @@ public class LockScreenAppActivity extends Activity {
 	        setContentView(R.layout.lockscreen);
 	        password_field = (EditText) findViewById(R.id.PasswordField);
 	        UnlockGestureButton = (Button)findViewById(R.id.unlock);
+	        UnlockGestureButton.setOnTouchListener(new OnTouchListener() {
+	            public boolean onTouch(View v, MotionEvent event) {
+
+	                if(event.getAction() == MotionEvent.ACTION_DOWN){
+	                	//Toast.makeText(getApplicationContext(), String.format("Akcia DOLE"), Toast.LENGTH_SHORT).show();
+	                	//gesture_track = true;
+	                	FragmentOne.gesture_track = true;
+	                }else if(event.getAction() == MotionEvent.ACTION_UP){
+	                	//Toast.makeText(getApplicationContext(), String.format("Akcia HORE"), Toast.LENGTH_SHORT).show();
+	                	FragmentOne.gesture_track = false;
+	                	//gesture_track = false;
+	                }
+	                return true;
+	            }
+	    });
 	        LockTime = (TextView) findViewById(R.id.lock_time);
 	        
 	        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -352,9 +370,9 @@ public class LockScreenAppActivity extends Activity {
         String currentDateandTime = sdf.format(new Date());
         LockTime.setText(currentDateandTime);
     	super.onResume();
-//		activeTrainingSet = getResources().getString(R.string.gesture_train_set);
-//		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
-//		bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+		activeTrainingSet = getResources().getString(R.string.gesture_train_set);
+		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
+		bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
     @Override
     protected void onStop() {
