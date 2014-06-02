@@ -21,7 +21,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/old_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -42,7 +42,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/new_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -59,7 +59,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/new_pass_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -72,7 +72,7 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/gesture_delete"
+            android:id="@+id/save_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -48,7 +48,7 @@ public class FragmentOne extends Fragment {
 	public static Button gestureStartStop;
 	@InjectView(R.id.gesture_train)
 	Button gestureTrain;
-	@InjectView(R.id.gesture_delete)
+	@InjectView(R.id.save_password)
 	Button gestureDelete;
 	@InjectView(R.id.gesture_around_start)
 	RelativeLayout gestureAroundStart;
@@ -263,7 +263,7 @@ public class FragmentOne extends Fragment {
 	 * Delete current gesture which is chosen in spinner
 	 * @param v View of this activity window
 	 */
-	@OnClick(R.id.gesture_delete)
+	@OnClick(R.id.save_password)
 	void gestureDeleteClicked(View v){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage(getActivity().getResources().getString(R.string.msg_delete_gesture)+" "+gestureDropdown.getSelectedItem().toString()+"?").setCancelable(true).setPositiveButton("Yes", new DialogInterface.OnClickListener() {

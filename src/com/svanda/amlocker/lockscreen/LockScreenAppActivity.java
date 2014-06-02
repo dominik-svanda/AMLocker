@@ -151,6 +151,17 @@ public class LockScreenAppActivity extends Activity {
 	      getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_FULLSCREEN/
 	                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);	        
 	        setContentView(R.layout.lockscreen);
+	        
+	        SharedPreferences settings = getSharedPreferences("Password", 0);
+			String value = settings.getString("password",null);
+			if (value == null) {
+			    // the key does not exist
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString("password","0000");
+				editor.commit();
+			} else {
+			    // handle the value
+			}
 	        password_field = (EditText) findViewById(R.id.PasswordField);
 	        UnlockGestureButton = (Button)findViewById(R.id.unlock);
 	        UnlockGestureButton.setOnTouchListener(new OnTouchListener() {
@@ -159,7 +170,17 @@ public class LockScreenAppActivity extends Activity {
 	                if(event.getAction() == MotionEvent.ACTION_DOWN){
 	                	//Toast.makeText(getApplicationContext(), String.format("Akcia DOLE"), Toast.LENGTH_SHORT).show();
 	                	//gesture_track = true;
-	                	FragmentOne.gesture_track = true;
+	            		SharedPreferences settings = getSharedPreferences("Password", 0);
+	            		if (password_field.getText().toString().equals(settings.getString("password", ""))){
+	            	    	Locked = false;
+	            			SharedPreferences app = getSharedPreferences("AppShortcuts", 0);
+	            			Intent intent  = new Intent().addCategory(Intent.CATEGORY_HOME).setAction(Intent.ACTION_MAIN).setPackage(app.getString("Launcher", "").toString());
+	            			intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+	            			startActivity(intent);
+	            			startActivity(new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME));
+	                	}else{
+	                		FragmentOne.gesture_track = true;
+	                	}
 	                }else if(event.getAction() == MotionEvent.ACTION_UP){
 	                	//Toast.makeText(getApplicationContext(), String.format("Akcia HORE"), Toast.LENGTH_SHORT).show();
 	                	FragmentOne.gesture_track = false;
