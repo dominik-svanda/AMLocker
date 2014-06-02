@@ -18,7 +18,12 @@ import butterknife.OnClick;
 import com.svanda.amlocker.R;
 import com.svanda.amlocker.activities.Utilities;
 import com.svanda.amlocker.adapters.AppInfoApadpter;
-
+/**
+ * Fragment for choosing default home launcher and shortcuts
+ * This applications will start when user make gesture related to launcher or shortcut
+ * @author Dominik Svanda
+ *
+ */
 public class FragmentTwo extends Fragment {
 
 	@InjectView(R.id.apps_launcher)
@@ -76,6 +81,10 @@ public class FragmentTwo extends Fragment {
 		Toast.makeText(getActivity(), String.format(settings.getString("Launcher", "").toString()), Toast.LENGTH_LONG).show();
 		
 	}
+	/**
+	 * Save selection of home launcher and shortcuts
+	 * @param v View of this fragment
+	 */
 	@OnClick(R.id.apps_save_button)
 	void saveClicked(View v){
 		ResolveInfo entry1 = (ResolveInfo)spinner_launcher.getSelectedItem();

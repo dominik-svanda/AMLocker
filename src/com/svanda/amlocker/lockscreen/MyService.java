@@ -9,6 +9,11 @@ import android.os.IBinder;
 
 import com.svanda.amlocker.lockscreen.receiver.lockScreenReceiver;
 
+/**
+ * Background service which disable Keyguard and bind screen off and on action to LockScreenReceiver.java
+ * @author Dominik Svanda
+ *
+ */
 public class MyService extends Service{
 	 BroadcastReceiver mReceiver;
 	// Intent myIntent;

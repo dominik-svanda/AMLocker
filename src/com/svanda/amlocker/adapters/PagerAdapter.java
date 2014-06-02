@@ -8,6 +8,13 @@ import com.svanda.amlocker.fragments.FragmentOne;
 import com.svanda.amlocker.fragments.FragmentThree;
 import com.svanda.amlocker.fragments.FragmentTwo;
 
+/**
+ * Create fragments which will be displayed when user selec tab at the top of 
+ * the main activity.
+ * @author Dominik Svanda
+ * 
+ *
+ */
 public class PagerAdapter extends FragmentPagerAdapter {
 
 	public PagerAdapter(FragmentManager fm) {

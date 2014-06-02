@@ -15,7 +15,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.svanda.amlocker.R;
-
+ /**
+  * Create tabs and layout for other fragments in this activity
+  * @author Dominik Svanda
+  *
+  */
 public class MainFragment extends Fragment implements TabListener {
 
 	@InjectView(R.id.pager) ViewPager mPager;
@@ -49,7 +53,9 @@ public class MainFragment extends Fragment implements TabListener {
 		
 		return view;
 	}
-	
+	/**
+	 * Create tabs at the top at activity window
+	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -64,6 +70,9 @@ public class MainFragment extends Fragment implements TabListener {
 		
 		mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 			@Override
+			/**
+			 * Action when tab is selected
+			 */
 			public void onPageSelected(int position) {
 				actionBar.setSelectedNavigationItem(position);
 			}

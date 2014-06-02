@@ -7,13 +7,20 @@ import android.content.Intent;
 
 import com.svanda.amlocker.lockscreen.LockScreenAppActivity;
 
-//-----------------------------------------
-
+/**
+ * Make actions when screen is of and on
+ * Start lockscreen activity window when screen of device is on
+ * @author Dominik Svanda
+ *
+ */
 public class lockScreenReceiver extends BroadcastReceiver  {
 	 public static boolean wasScreenOn = true;
 	 //Vibrator v = (Vibrator) this.C.getSystemService(Context.VIBRATOR_SERVICE);
 	 
-
+	 /**
+	  * Receive intents ACTION_SCREEN_OFF, ACTION_SCREEN_ON and ACTION_BOOT_COMPLETED to react on these states
+	  * and run LockScreeAppActivity
+	  */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 

@@ -29,7 +29,14 @@ import com.dfki.GestureFramework.IGestureRecognitionListener;
 import com.dfki.GestureFramework.IGestureRecognitionService;
 import com.dfki.GestureFramework.classifier.Distribution;
 import com.svanda.amlocker.R;
-//-----------------------------------------------------------------------------
+
+/**
+ * Fragment for managing 3D gestures recorded from accelerometer
+ * Provides training mode to create new gestures, delete gestures, test recorded gestures
+ * and start gesture recognition service
+ * @author Dominik Svanda
+ *
+ */
 public class FragmentOne extends Fragment {
 
 	IGestureRecognitionService recognitionService;
@@ -52,75 +59,97 @@ public class FragmentOne extends Fragment {
 	
 	private int trainProgress = 0;
 	
-	
-//	private final ServiceConnection serviceConnection = new ServiceConnection() {
-//
-//		@Override
-//		public void onServiceConnected(ComponentName className, IBinder service) {
-//			recognitionService = IGestureRecognitionService.Stub.asInterface(service);
-//			try {
-//				recognitionService.startClassificationMode(activeTrainingSet);
-//				recognitionService.registerListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
-//			} catch (RemoteException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//
-//		@Override
-//		public void onServiceDisconnected(ComponentName className) {
-//			recognitionService = null;
-//		}
-//	};
-//	
-//	IBinder gestureListenerStub = new IGestureRecognitionListener.Stub() {
-//
-//		@Override
-//		public void onGestureLearned(String gestureName) throws RemoteException {
-//			Toast.makeText(getActivity(), String.format("Gesto %s natrenovane", gestureName), Toast.LENGTH_SHORT).show();
-//			//System.err.println("Gesture %s learned");
-//			trainProgress++;
-//			if (trainProgress < 3)
-//				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFFFF3232, Mode.SRC_IN);
-//			if (trainProgress == 3 || trainProgress == 4)
-//				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFFFF9900, Mode.SRC_IN);			
-//			if(trainProgress == 5){
-//				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFF00E500, Mode.SRC_IN);
-//			}
-//			gestureTrainProgress.setProgress(trainProgress);
-//		}
-//
-//		@Override
-//		public void onTrainingSetDeleted(String trainingSet) throws RemoteException {
-//			Toast.makeText(getActivity(), String.format("Trenovacia mnozina %s vymazana", trainingSet), Toast.LENGTH_SHORT).show();
-//			System.err.println(String.format("Training set %s deleted", trainingSet));
-//			gestureTrainProgress.setProgress(0);
-//		}
-//
-//		@Override
-//		public void onGestureRecognized(final Distribution distribution) throws RemoteException {
-//			getActivity().runOnUiThread(new Runnable() {
-//				@Override
-//				public void run() {
-//					if (distribution.getBestDistance() < gestureTolerance.getProgress() &&  distribution.getBestMatch().equals( gestureDropdown.getSelectedItem().toString() ) ){	
-//						gestureDropdown.setBackgroundColor(0xFF00E500);
-//						//gestureAroundStart.setBackgroundColor(0xFF00FF00);
-//						Toast.makeText(getActivity(), String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
-//					}else{
-//						gestureDropdown.setBackgroundColor(0xFFFF3232);
-//						//gestureAroundStart.setBackgroundColor(0xFFFF0000);
-//						Toast.makeText(getActivity(), String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
-//					}
-//				}
-//			});
-//		}
-//	};
+	/**
+	 * Service connection for Gesture Recognition Service
+	 */
+	private final ServiceConnection serviceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			recognitionService = IGestureRecognitionService.Stub.asInterface(service);
+			try {
+				recognitionService.startClassificationMode(activeTrainingSet);
+				recognitionService.registerListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName className) {
+			recognitionService = null;
+		}
+	};
+
+	IBinder gestureListenerStub = new IGestureRecognitionListener.Stub() {
+
+		/**
+		 * Make an action when new gesture is learned
+		 * increment trainProgress which fill progress bar which indicate number of training  
+		 * @param gestureName Name of gesture
+		 */
+		@Override
+		public void onGestureLearned(String gestureName) throws RemoteException {
+			Toast.makeText(getActivity(), String.format("Gesto %s natrenovane", gestureName), Toast.LENGTH_SHORT).show();
+
+			trainProgress++;
+			if (trainProgress < 3)
+				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFFFF3232, Mode.SRC_IN);
+			if (trainProgress == 3 || trainProgress == 4)
+				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFFFF9900, Mode.SRC_IN);			
+			if(trainProgress == 5){
+				gestureTrainProgress.getProgressDrawable().setColorFilter(0xFF00E500, Mode.SRC_IN);
+			}
+			gestureTrainProgress.setProgress(trainProgress);
+		}
+		
+		/**
+		 * Make an action when gesture set is deleted
+		 * @param trainingSet Name of gesture set
+		 */
+		@Override
+		public void onTrainingSetDeleted(String trainingSet) throws RemoteException {
+			Toast.makeText(getActivity(), String.format("Trenovacia mnozina %s vymazana", trainingSet), Toast.LENGTH_SHORT).show();
+			System.err.println(String.format("Training set %s deleted", trainingSet));
+			gestureTrainProgress.setProgress(0);
+		}
+		/**
+		 * Make an action when gesture is recognized
+		 * If gesture is recognized and distance from trained gesture is under tolerance threshold
+		 * set background of spinner to green else to red color
+		 * 
+		 */
+		@Override
+		public void onGestureRecognized(final Distribution distribution) throws RemoteException {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (distribution.getBestDistance() < gestureTolerance.getProgress() &&  distribution.getBestMatch().equals( gestureDropdown.getSelectedItem().toString() ) ){	
+						gestureDropdown.setBackgroundColor(0xFF00E500);
+						//gestureAroundStart.setBackgroundColor(0xFF00FF00);
+						//Toast.makeText(getActivity(), String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity(), String.format("%s", distribution.getBestMatch()), Toast.LENGTH_LONG).show();
+					}else{
+						gestureDropdown.setBackgroundColor(0xFFFF3232);
+						//gestureAroundStart.setBackgroundColor(0xFFFF0000);
+						//Toast.makeText(getActivity(), String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity(), String.format("%s", distribution.getBestMatch()), Toast.LENGTH_LONG).show();
+
+					}
+				}
+			});
+		}
+	};
 	
 	public static FragmentOne newInstance() {
 		FragmentOne fragment = new FragmentOne();
 		return fragment;
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -149,14 +178,19 @@ public class FragmentOne extends Fragment {
 				// TODO Auto-generated method stub
 				
 			}
-			
+			/**
+			 * Make an activity when progress on seek bar was changed
+			 * Save value tolerance, which presents tolerance threshold for gestures
+			 */
 			@Override
+
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				SharedPreferences settings = getActivity().getSharedPreferences("Gestures", 0);
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putInt("Tolerance",progress);
 				editor.commit();
+				gestureStartStop.setText(String.valueOf(progress));
 				
 			}
 		});       
@@ -171,7 +205,11 @@ public class FragmentOne extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	
+	/**
+	 * Action when gesture train button was clicked
+	 * Disable other buttons and settings on screen and start train mode for gestures
+	 * @param v View of this activity fragment
+	 */
 	@OnClick(R.id.gesture_train)
 	void gestureTrainClicked(View v){
 		activeTrainingSet = getActivity().getResources().getString(R.string.gesture_train_set);
@@ -198,6 +236,11 @@ public class FragmentOne extends Fragment {
 			}
 		}
 	}
+	/**
+	 * Action when gesture delete button is clicked
+	 * Delete current gesture which is chosen in spinner
+	 * @param v View of this activity window
+	 */
 	@OnClick(R.id.gesture_delete)
 	void gestureDeleteClicked(View v){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -223,28 +266,32 @@ public class FragmentOne extends Fragment {
 		});
 		builder.create().show();
 	}
-
+	/**
+	 * Bind gesture recognition service when application resume from background
+	 */
 	@Override
 	public void onResume() {
-//		activeTrainingSet = getActivity().getResources().getString(R.string.gesture_train_set);
-//		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
-//		getActivity().bindService(bindIntent, serviceConnection, getActivity().BIND_AUTO_CREATE);
+		activeTrainingSet = getActivity().getResources().getString(R.string.gesture_train_set);
+		Intent bindIntent = new Intent("com.dfki.GestureFramework.GESTURE_RECOGNIZER");
+		getActivity().bindService(bindIntent, serviceConnection, getActivity().BIND_AUTO_CREATE);
 		trainProgress = 0;
 		gestureTrainProgress.getProgressDrawable().clearColorFilter();
 		gestureTrainProgress.setProgress(trainProgress);
 		super.onResume();
 	}
-
+	/**
+	 * Unregister gesture recognition service when application goes to background
+	 */
 	@Override
 	public void onPause() {
-//		try {
-//			recognitionService.unregisterListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
-//		} catch (RemoteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		recognitionService = null;
-//		getActivity().unbindService(serviceConnection);
+		try {
+			recognitionService.unregisterListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		recognitionService = null;
+		getActivity().unbindService(serviceConnection);
 		super.onPause();
 	}
 	

@@ -13,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.svanda.amlocker.R;
-
+/**
+ * Provide layout for list of applications to fill spinner (dropdown list)
+ * @author Dominik Svanda
+ *
+ */
 public class AppInfoApadpter extends BaseAdapter {
 	private Context mContext;
 	private List<ResolveInfo> mListAppInfo;
@@ -29,7 +33,11 @@ public class AppInfoApadpter extends BaseAdapter {
 	public int getCount() {
 		return mListAppInfo.size();
 	}
-
+	/**
+	 * Get item from list of installed applications
+	 * @param position index of item in list of installed applications
+	 * @return item from list of installed applications
+	 */
 	@Override
 	public Object getItem(int position) {
 		return mListAppInfo.get(position);
@@ -39,7 +47,13 @@ public class AppInfoApadpter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-
+	/**
+	 * Get installed application list and create view
+	 * @param position position of item in list
+	 * @param convertView default view which will be modified and filled
+	 * @param parent parent group of views
+	 * @return view of installed applications with their name, package name and icon
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// get the selected entry

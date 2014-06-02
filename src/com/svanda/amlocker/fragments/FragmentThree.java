@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 import com.svanda.amlocker.R;
-
+/**
+ * Fragment where user can change master password for lockscreen
+ * @author Dominik Svanda
+ *	
+ */
 public class FragmentThree extends Fragment {
 
 	public static FragmentThree newInstance() {

@@ -1,4 +1,4 @@
-/*
+/**
  * NormExtractor.java
  *
  * Created: 18.08.2011
